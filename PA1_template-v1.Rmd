@@ -1,0 +1,110 @@
+---
+output: 
+  html_document:
+    keep_md: yes
+---
+
+
+## Loading and preprocessing the data
+```{r}
+input1 <- read.csv("D:/Users/kamatchi/Documents/Reproducible Research/Week2 Lectures/Week2 assignment/activity.csv")
+df<- NULL
+dftest<- NULL
+dftest1<- NULL
+```
+
+
+## What is mean total number of steps taken per day?
+##Subset first for each day and add steps for each day
+## plot histogram
+## calculate median and mean
+```{r}
+test2<- unique(input1$date)
+for(i in 1:length(test2)){
+  j<- test2[i]
+  dftest<- subset(input1, input1$date==j)
+  sumsteps <- sum(dftest$steps, na.rm=TRUE)
+  dftest1<- cbind.data.frame(j, sumsteps) 
+  df<-rbind(df,dftest1)
+}
+names(df)<-c("date", "sumsteps")
+hist(df$sumsteps)
+a<- median(df$sumsteps)
+a
+b<- mean(df$sumsteps)
+b
+```
+
+
+## What is the average daily activity pattern?
+## Subset first for each five minute interval 
+## and calculate the mean for each interval
+## plot time series plot 
+## find the maximum value of the mean
+## subset to find the interval that has the maximum
+```{r}
+df2<- NULL
+df2test<-NULL
+df2test1<-NULL
+df2test2<-NULL
+test3<-unique(input1$interval)
+for (i in 1:length(test3)){ 
+  k<-test3[i]
+  df2test<- subset(input1, input1$interval==k)
+  meansteps1 <- mean(df2test$steps, na.rm=TRUE)
+  df2test1 <- cbind.data.frame(k, meansteps1)
+  df2<-rbind(df2, df2test1)
+}
+names(df2)<- c("interval", "meansteps")
+plot(df2$interval, df2$meansteps, type="l")
+b1<-max(subset(df2, select=meansteps))
+df2test2<-subset(df2, df2$meansteps==b1)
+df2test2
+```
+
+
+## Imputing missing values
+## Calculate the number of rows with NA
+```{r}
+b3<-sum(is.na(input1$steps))
+b3
+```
+## Try to replace the NA values with mean for the same 5 minute 
+## interval. Then calculate median and mean
+## from results we can say that there is no difference found by 
+## replacing the NA with mean values as far as mean and median. 
+```{r}
+df3test<-subset(input1, is.na(input1$steps))
+df3test1<-input1[complete.cases(input1),]
+
+for (i in 1:nrow(df3test)){
+  if (df3test$interval %in% df2$interval){ 
+    df3test$steps<- df2$meansteps
+  }
+}
+df3test1<-rbind(df3test1,df3test)
+df3test1
+df3<-NULL
+for(i in 1:length(test2)){
+  j<- test2[i]
+  df3test2<- subset(df3test1, df3test1$date==j)
+  sumsteps3 <- sum(df3test2$steps, na.rm=TRUE)
+  df3test3<- cbind.data.frame(j, sumsteps3) 
+  df3<-rbind(df3,df3test3)
+}
+names(df3)<-c("date", "sumsteps")
+hist(df3$sumsteps)
+a1<- median(df$sumsteps)
+a1
+b1<- mean(df$sumsteps)
+b1
+```
+
+
+
+## Are there differences in activity patterns between weekdays and weekends?
+ first sort out days in input2 as weekdays or weekend
+ prior to that we have to change the format to get into appropriate
+ format for weekdays() to read it. 
+## COuld not get this part to work..
+
