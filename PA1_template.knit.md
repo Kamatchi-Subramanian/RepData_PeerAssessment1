@@ -1,0 +1,3 @@
+PA1_template.knit.md
+
+"C:/Program Files/RStudio/bin/pandoc/pandoc" +RTS -K512m -RTS PA1_template.utf8.md --to html --from markdown+autolink_bare_uris+ascii_identifiers+tex_math_single_backslash-implicit_figures --output PA1_template.html --smart --email-obfuscation none --self-contained --standalone --section-divs --template "D:\Users\kamatchi\Documents\R\win-library\3.1\rmarkdown\rmd\h\default.html" --variable "theme:bootstrap" --include-in-header "D:\Users\kamatchi\AppData\Local\Temp\RtmpcVoT7b\rmarkdown-str5684404e1406.html" --mathjax --variable "mathjax-url:https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML" --no-highlight --variable "highlightjs=D:\Users\kamatchi\Documents\R\win-library\3.1\rmarkdown\rmd\h\highlight" 
